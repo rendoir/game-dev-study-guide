@@ -167,7 +167,9 @@ A process possesses the resources (files, memory) and a sequence of execution (t
 
 
 ### C/C++
-- Templates
+- Templates  
+The compiler creates the code for each type used. Avoids code duplication in the codebase.
+
 - Exception handling
 - Inheritance and Polymorphism
     - Access
@@ -199,69 +201,87 @@ A process possesses the resources (files, memory) and a sequence of execution (t
     - Auto
     - Extern
     - Register
-    - Struct Packing / Padding
-        - Padding is used to increase access performance
-        - Disable padding with `#pragma pack(1)` which packs on the first byte.
-        - Each CPU Cycle can access only one word (4 bytes in 32-bit architectures). So if an `int` (4 bytes) is distributed in 2 words due to bad alignment before the int, then it will take 2 CPU cycles to read its value.
-        - Solution is to add padding
-    - Smart pointer
-        - Automate the process of deleting the allocated memory. 
-        - Prefered method to create a smart pointer is to call the `std::make_*` function.
-        - Unique pointer
-            - It's a scoped pointer -> when it goes out of scope it's deleted.
-            - Can't copy unique pointers
-            - Only one reference to the object
-            - Implemented as a stack object that once out of scope calls delete on the referenced object in the heap.
-        - Shared pointer
-            - Works by reference counting
-            - Each assignment/copy increments the reference counter and whenever one goes out of scope it's decremented
-            - When the reference counter reaches 0, the pointer is deleted
-        - Weak pointer
-            - Used with shared pointers
-            - Assigning a weak pointer to a shared pointer does not increase/decrease the reference counter
-            - Possible to query if the pointer is valid, because they might point to invalid memory if the shared pointer has been deleted
-    - lvalues vs rvalues
-        - `int i = 10`: `i` has a location (storage) while `10` doesn't.
-        - `i` is a `lvalue` while `10` is a `rvalue`.
-        - rvalues don't need to be a literal, can also be a result of a function that returns a temporary value (has no storage).
-        - Exception being with const: a const lvalue reference can hold an rvalue (compiler probably creates a temporary variable)
-        - `std::string fullName = firstName + lastName`: The sum is an rvalue while `fullName` is a lvalue
-        - To accept only rvalues use two ampersands (&&)
-    - Binding
-        - Static binding: In assembly, it's just calling the instruction at a fixed address
-        - Dynamic binding: The compiler will generate a variable to hold the address of the instruction that will be called
-    - Virtual pointers and virtual tables  
-    ```
-    class A {
-    public:
-        virtual void vf1();
-        virtual void vf2();
-        void f1();
-        void f2();
-    private:
-        int x;
-        int y;
-    }
-    
-    class B : public A {
-    public:
-        virtual void vf1();
-        void f1();
-        void f3();
-    private:
-        int z;
-    }
-    ```  
+- Struct Packing / Padding
+    - Padding is used to increase access performance
+    - Disable padding with `#pragma pack(1)` which packs on the first byte.
+    - Each CPU Cycle can access only one word (4 bytes in 32-bit architectures). So if an `int` (4 bytes) is distributed in 2 words due to bad alignment before the int, then it will take 2 CPU cycles to read its value.
+    - Solution is to add padding
+- Smart pointer
+    - Automate the process of deleting the allocated memory. 
+    - Prefered method to create a smart pointer is to call the `std::make_*` function.
+    - Unique pointer
+        - It's a scoped pointer -> when it goes out of scope it's deleted.
+        - Can't copy unique pointers
+        - Only one reference to the object
+        - Implemented as a stack object that once out of scope calls delete on the referenced object in the heap.
+    - Shared pointer
+        - Works by reference counting
+        - Each assignment/copy increments the reference counter and whenever one goes out of scope it's decremented
+        - When the reference counter reaches 0, the pointer is deleted
+    - Weak pointer
+        - Used with shared pointers
+        - Assigning a weak pointer to a shared pointer does not increase/decrease the reference counter
+        - Possible to query if the pointer is valid, because they might point to invalid memory if the shared pointer has been deleted
+- lvalues vs rvalues
+    - `int i = 10`: `i` has a location (storage) while `10` doesn't.
+    - `i` is a `lvalue` while `10` is a `rvalue`.
+    - rvalues don't need to be a literal, can also be a result of a function that returns a temporary value (has no storage).
+    - Exception being with const: a const lvalue reference can hold an rvalue (compiler probably creates a temporary variable)
+    - `std::string fullName = firstName + lastName`: The sum is an rvalue while `fullName` is a lvalue
+    - To accept only rvalues use two ampersands (&&)
+- Binding
+    - Static binding: In assembly, it's just calling the instruction at a fixed address
+    - Dynamic binding: The compiler will generate a variable to hold the address of the instruction that will be called
+- Virtual pointers and virtual tables  
+```
+class A {
+public:
+    virtual void vf1();
+    virtual void vf2();
+    void f1();
+    void f2();
+private:
+    int x;
+    int y;
+}
 
-    Each class will have one virtual pointer that points to a virtual table and each entry in the vtable will point to virtual member function. `A` will have two entries (`A::vf1()` and `A::vf2()`) and `B` also has two entries (`B::vf1()` and `A::vf2()`).  
-    Calling a virtual function (dynamic binding / polymorphism) will result in `(*(p->vptr)[n])(p)` where `p` is a pointer to the object, `vptr` its virtual pointer and `n` the entry in the virtual table. The function is then called with parameter `p` which is the way of giving the function the `this` pointer.  
-    Functions (either virtual or not) are not present in the object. They exist in the code segment, unlike its data members.
+class B : public A {
+public:
+    virtual void vf1();
+    void f1();
+    void f3();
+private:
+    int z;
+}
+```  
 
-    - Mutex vs Atomic  
-    Atomic operations don't require a thread to block -> No deadlocks. Atomic may be faster.
+Each class will have one virtual pointer that points to a virtual table and each entry in the vtable will point to virtual member function. `A` will have two entries (`A::vf1()` and `A::vf2()`) and `B` also has two entries (`B::vf1()` and `A::vf2()`).  
+Calling a virtual function (dynamic binding / polymorphism) will result in `(*(p->vptr)[n])(p)` where `p` is a pointer to the object, `vptr` its virtual pointer and `n` the entry in the virtual table. The function is then called with parameter `p` which is the way of giving the function the `this` pointer.  
+Functions (either virtual or not) are not present in the object. They exist in the code segment, unlike its data members.
 
-    - Dynamic casting  
-    Used for conversions between polymorphic types, i.e., to cast from a class to a derived class (the other way around can be done implicitly). Dynamic casts can be seen as a validation to the cast, using Runtime Type Information (RTTI) to know if the type matches. Dynamic casts can use the `typeid` operator which returns a `type_info` struct.  
+- Mutex vs Atomic  
+Atomic operations don't require a thread to block -> No deadlocks. Atomic may be faster.
+
+- Casting
+    - Static casts  
+    It's a compile-time directive that creates a new variable resulting from the conversion to the new type.
+
+    - Reinterpret casts  
+    It is a compile-time directive which instructs the compiler to treat the expression as if it had the new type. In other words, that piece of memory is now treated as the new type.
+
+    - Dynamic casts  
+    Used for conversions between polymorphic types in real-time, i.e., to cast from a class to a derived class (the other way around can be done implicitly). Dynamic casts can be seen as a validation to the cast, using Runtime Type Information (RTTI) to know if the type matches. Dynamic casts can use the `typeid` operator which returns a `type_info` struct.  
+
+    - Const cast  
+    Removes the constness from a variable  
+
+- Pre-compiled headers
+    - Place all necessary headers that won't be changed constantly (for example std or frameworks) in a header (`pch.h`).
+    - Speeds up (subsequent) compilation times
+    - g++ usage:
+        - Create the `pch.h`
+        - Compile the pch with `g++ pch.h`
+        - The file `pch.h.gch` is created
 
 - Memory  
 ![Memory](https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png)  
