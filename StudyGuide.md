@@ -32,10 +32,17 @@
         - Complexity of `insert`: O(logN)
         - Complexity of `erase`: O(X), where X is the number of elements deleted (requires a search first)
         - Complexity of search: O(logN)
+        - Implemented as a [binary search tree](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/)  
     - Map
         - Complexity of `insert`: O(logN), can be O(1) if the position is given
         - Complexity of search: O(logN)
-        - Complexity of access: O(1)
+        - Complexity of access: O(logN)
+    - Hash
+        - Implementation requires a hash function which is applied to the element to be inserted. The container can be an array.
+        - Collisions can be handled in different ways:
+            - Probing - Find next available index (subsequent searches start at the hash index and continues through the same path as probing, if the element in the index does not match)
+            - Linked lists - Each entry is a linked list to each the element is added (subsequent searches loop through the list)
+        - Lookup is O(1) if there are no collisions, then it depends on the collision-handling process
     - Graphs
         - Biconnection
         - Strongly connected
