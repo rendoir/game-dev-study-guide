@@ -28,6 +28,10 @@ y = m * x + b
 - Orthogonal if A^(-1) = A^T
 
 ### Change of basis
+- Nomenclature
+    - Basis: N-dimensional basis are defined by at least N linearly independent vectors
+    - Orthogonal Basis: all basis vectors are perpendicular (dot product is zero)
+    - Orthonormal Basis: orthogonal basis where all basis vectors have unit length
 - Change of basis matrix M_u->e
 - Xe = M_u->e * Xu
 - E * Xe = U * Xu

@@ -112,7 +112,7 @@ Map a domain to a language, the language to a grammar, and the grammar to a hier
 ![Interpreter](http://coursegalaxy.com/designpatterns/interpreter/images/interpreter_structure.jpg)
 
 ### Iterator
-Provide a way to **access** the elements of an aggregate object sequentially without exposing its underlying representation.
+Provide a way to **access** the elements of an aggregate object sequentially without exposing its underlying representation.  
 ![Iterator](https://sourcemaking.com/files/v2/content/patterns/Iterator.png)
 
 ### Mediator
@@ -122,7 +122,7 @@ Promote the many-to-many relationships between interacting peers to "full object
 ![Mediator](https://upload.wikimedia.org/wikipedia/commons/9/92/W3sDesign_Mediator_Design_Pattern_UML.jpg)
 
 ### Memento
-Without violating encapsulation, capture and externalize an object's **internal state** so that the object can be **returned to this state later**.
+Without violating encapsulation, capture and externalize an object's **internal state** so that the object can be **returned to this state later**.  
 ![Memento](https://sourcemaking.com/files/v2/content/patterns/Memento.png)
 - Originator - the object that knows how to save itself.
 - Caretaker - the object that knows why and when the Originator needs to save and restore itself.
@@ -145,7 +145,7 @@ Define a one-to-many dependency between objects so that when one **object change
 
 ### State
 Allow an object to **alter its behaviour when its internal state changes**. The object will appear to change its class.  
-Used to implement an **object-oriented state machine**.
+Used to implement an **object-oriented state machine**.  
 ![State](https://web.fe.up.pt/~arestivo/presentation/assets/gamepatterns/state.svg)
 
 ### Strategy

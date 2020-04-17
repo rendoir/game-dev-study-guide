@@ -19,30 +19,42 @@
         - Memory is contiguous -> More cache usage -> Storing objects instead of pointers can be better for cache usage
         - Optimization: Use `std::vector::reserve` to avoid allocations on insertion.
         - Optimization: Avoid calling copy constructor on insertion with `std::vector::push_back` which happens because the element is in the stack and needs to be copied to the memory allocated by the vector. An optimization is to use `std::vector::emplace_back` instead as it creates the element in the memory allocated by the vector, avoiding a copy. 
-        - Complexity of `insert`/`erase` (particular index): O(X + Y), where X is the number of elements inserted/deleted and M the number of elements moved
+        - Complexity of `insert`/`erase` (particular index): O(M), where M is the number of elements moved (i.e., distance between `pos` and `end` of the container)
         - Complexity of `push_back`/`pop_back`: O(1)
         - Complexity of access: O(1)
         - Complexity of search: O(N)
     - List (case of Doubly linked list)
-        - Complexity of `insert`/`erase`: O(N)
+        - Complexity of `insert`/`erase`: O(1)
         - Complexity of `push_back`/`push_front`/`pop_back`/`pop_front`: O(1)
         - Complexity of access: O(N)
         - Complexity of search: O(N)
     - Set
-        - Complexity of `insert`: O(logN)
-        - Complexity of `erase`: O(X), where X is the number of elements deleted (requires a search first)
+        - Complexity of `insert`: O(logN), can be O(1) if the position is right after/before the hint
+        - Complexity of `erase`: O(1), position must be given
         - Complexity of search: O(logN)
-        - Implemented as a [binary search tree](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/)  
+        - Implemented as a [binary search tree](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/), usually a Red-Black Tree  
     - Map
-        - Complexity of `insert`: O(logN), can be O(1) if the position is given
+        - Complexity of `insert`: O(logN), can be O(1) if the position is right after/before the hint
+        - Complexity of `erase`: O(1), position must be given
         - Complexity of search: O(logN)
         - Complexity of access: O(logN)
+        - Implemented as a [binary search tree](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/), usually a Red-Black Tree
     - Hash
         - Implementation requires a hash function which is applied to the element to be inserted. The container can be an array.
         - Collisions can be handled in different ways:
             - Probing - Find next available index (subsequent searches start at the hash index and continues through the same path as probing, if the element in the index does not match)
             - Linked lists - Each entry is a linked list to each the element is added (subsequent searches loop through the list)
-        - Lookup is O(1) if there are no collisions, then it depends on the collision-handling process
+        - Lookup is O(1) if there are no collisions, then it depends on the collision-handling process (worst case of O(size))
+        - Insertion / Removal: Average O(1); Worst-case O(size)
+    - Deque
+        - Double-ended queue
+        - Memory is not contiguous
+        - Implemented as multiple arrays of equal and fixed size linked together
+        - On average insertions are faster than vector because it doesn't perform full container copies when more space has to be allocated, at most it creates another array to store the new element
+        - Complexity of `insert`/`erase`: O(M), where M is the number of elements moved (i.e., minimum distance between `pos` and either `end` or `begin` of the container)
+        - Complexity of `push_back`/`push_front`/`pop_back`/`pop_front`: O(1)
+        - Complexity of access: O(1), slower than vector because it performs two-pointer dereference (one for getting the correct array and another for getting the element) instead of one as in vector
+        - Complexity of search: O(N)
     - Graphs
         - Biconnection
         - Strongly connected
