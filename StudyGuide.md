@@ -1,4 +1,4 @@
-### Algorithms and Datastructures
+### Algorithms and Data structures
 - [Big-O Cheat Sheet](https://www.bigocheatsheet.com/)
 
 - Sorting
@@ -56,8 +56,8 @@
         - Complexity of access: O(1), slower than vector because it performs two-pointer dereference (one for getting the correct array and another for getting the element) instead of one as in vector
         - Complexity of search: O(N)
     - Graphs
-        - Biconnection
-        - Strongly connected
+        - Strongly connected: if every vertex is reachable from every other vertex
+        - Biconnection: if any one vertex were to be removed, the graph will remain connected
 
 - Algorithms
     - Graph algorithms
@@ -88,11 +88,10 @@
                         Q.enqueue(w)
         }
         ```
-        - Maximum flow (e.g., Ford-Fulkerson)
-        - Minimum spanning trees (e.g., Prism)
-        - Shortest path (e.g., Dijkstra)
-        - Euler circuit 
-        - Matching
+        - Maximum flow (e.g., Ford-Fulkerson): finding a feasible flow through a graph that obtains the maximum possible flow rate
+        - Minimum spanning trees (e.g., Prism): subset of the edges of a graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight
+        - Shortest path (e.g., Dijkstra): finding a path between two vertices in a graph such that the sum of the weights of its constituent edges is minimized
+        - Euler circuit: path in a graph that visits every edge exactly once (allowing for revisiting vertices); when impossible, find the smallest number of graph edges to duplicate (or the subset of edges with the minimum possible total weight) so that the resulting multigraph has an Eulerian circuit
 
     - Strings
         - Exact / approximated matching
@@ -105,7 +104,9 @@
         - Backtracking algorithms  
         Trial and error problems, exploring and looking for the solution (e.g., coin problem)
         - Divide and conquer
-- Recursion vs Iteration
+    - Recursion vs Iteration
+        - Recursion requires more stack memory
+        - Recursion can be easier to implement and to use without additional data structures
 
 ### Artifitial Inteligence
 - Graphs
@@ -128,7 +129,11 @@
             - Alpha Beta pruning  
             Alpha is the best value that the maximizer currently can guarantee at that level or above. Initially set to -Inf.  
             Beta is the best value that the minimizer currently can guarantee at that level or above. Initially set to +Inf.  
-            Prune if alpha >= beta.  
+            Prune if alpha >= beta. 
+
+- Game theory  
+Game theory is the mathematical study of strategic decision-making among independent self-interested agents.  
+Games can be cooperative/non-cooperative, symmetric/asymmetric, zero-sum/win-win, simultaneous/sequential, perfect/imperfect information, ...
 
 
 
@@ -189,14 +194,23 @@ A process possesses the resources (files, memory) and a sequence of execution (t
 - Templates  
 The compiler creates the code for each type used. Avoids code duplication in the codebase.
 
-- Exception handling
-- Inheritance and Polymorphism
-    - Access
+- Exception handling  
+Once an exception is thrown, the program looks for the next closest `catch` statement that can handle the exception. Once found, stack unwinding begins, destroying in reverse order all stack allocated objects constructed from the beggining of the `try` block associated with the current `catch` handler.
+
+- Inheritance Access
     ![InheritanceAccess](https://media.geeksforgeeks.org/wp-content/cdn-uploads/table-class.png)
+
 - Operator overload
-- Scopes
-    - Namespace  
-    Named scope used to organise code into logical groups. Helps prevent name collisions.
+```cpp
+Box operator+(const Box& b) {
+    Box box;
+    box.length = this->length + b.length;
+    box.breadth = this->breadth + b.breadth;
+    box.height = this->height + b.height;
+    return box;
+}
+```
+
 - Keywords
     - Volatile  
     Qualifier applied to a variable to tell the compiler that the value of the variable may change at any time without any action from the code the compiler knows about, thus disabling some optimizations that could break the program. Use cases include global variables modified by an interrupt service routine or in a multi-threading, and memory-mapped peripheral registers.
@@ -220,11 +234,13 @@ The compiler creates the code for each type used. Avoids code duplication in the
     - Auto
     - Extern
     - Register
+
 - Struct Packing / Padding
     - Padding is used to increase access performance
     - Disable padding with `#pragma pack(1)` which packs on the first byte.
     - Each CPU Cycle can access only one word (4 bytes in 32-bit architectures). So if an `int` (4 bytes) is distributed in 2 words due to bad alignment before the int, then it will take 2 CPU cycles to read its value.
     - Solution is to add padding
+
 - Smart pointer
     - Automate the process of deleting the allocated memory. 
     - Prefered method to create a smart pointer is to call the `std::make_*` function.
@@ -241,18 +257,22 @@ The compiler creates the code for each type used. Avoids code duplication in the
         - Used with shared pointers
         - Assigning a weak pointer to a shared pointer does not increase/decrease the reference counter
         - Possible to query if the pointer is valid, because they might point to invalid memory if the shared pointer has been deleted
-- lvalues vs rvalues
-    - `int i = 10`: `i` has a location (storage) while `10` doesn't.
-    - `i` is a `lvalue` while `10` is a `rvalue`.
-    - rvalues don't need to be a literal, can also be a result of a function that returns a temporary value (has no storage).
-    - Exception being with const: a const lvalue reference can hold an rvalue (compiler probably creates a temporary variable)
-    - `std::string fullName = firstName + lastName`: The sum is an rvalue while `fullName` is a lvalue
-    - To accept only rvalues use two ampersands (&&)
+
+- Move semantics        
+    - lvalues vs rvalues
+        - `int i = 10`: `i` has a location (storage) while `10` doesn't.
+        - `i` is a `lvalue` while `10` is a `rvalue`.
+        - rvalues don't need to be a literal, can also be a result of a function that returns a temporary value (has no storage).
+        - Exception being with const: a const lvalue reference can hold an rvalue (compiler probably creates a temporary variable)
+        - `std::string fullName = firstName + lastName`: The sum is an rvalue while `fullName` is a lvalue
+        - To accept only rvalues use two ampersands (&&)
+
 - Binding
     - Static binding: In assembly, it's just calling the instruction at a fixed address
     - Dynamic binding: The compiler will generate a variable to hold the address of the instruction that will be called
+
 - Virtual pointers and virtual tables  
-```
+```cpp
 class A {
 public:
     virtual void vf1();
@@ -304,7 +324,8 @@ Atomic operations don't require a thread to block -> No deadlocks. Atomic may be
 
 - Memory  
 ![Memory](https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png)  
-Stack size if fixed. Program crashes on stack overflow. Entries in the stack are added and removed automatically when entering or exiting their scope. With a full heap, allocators simply return null.
+Stack size if fixed. Program crashes on stack overflow. Entries in the stack are added and removed automatically when entering or exiting their scope. With a full heap, allocators simply return null.  
+Cache memory is usually implemented with SRAM (static random-access memory) while the main memory (Stack and Heap) uses DRAM (dynamic random-access memory)
 
 
 ### Game Development
