@@ -134,6 +134,32 @@
 - Game theory  
 Game theory is the mathematical study of strategic decision-making among independent self-interested agents.  
 Games can be cooperative/non-cooperative, symmetric/asymmetric, zero-sum/win-win, simultaneous/sequential, perfect/imperfect information, ...
+    - Utility function: mapping from world states to real numbers
+    - Strategies
+        - Pure strategy: determines the exact action to play
+        - Mixed strategy: assignement of a probability to each pure strategy
+    
+    - Payoff matrix:  
+    <img width="250" height="250" src="https://i.imgur.com/ibUfVp0.png">
+    
+    - Dominant strategy: *Si* is dominant for player *i* if, no matter what strategy *Sj* agent *j* chooses, *i* will do at least as well playing *Si* as it would doing anything else. *Si* is dominant if it is *i*’s best response to all of agent *j*’s strategies.  
+    Is always a Nash equilibrium.  
+    <img width="250" height="250" src="https://i.imgur.com/CWrukVu.png">
+    
+
+    
+    - Nash equilibrium:  
+        - Two strategies *Si* and *Sj* are in (pure-strategy) Nash equilibirium if:  
+            - assuming that agent *i* plays *Si*, agent *j* can do no better than play *Sj*, and
+            - assuming that agent *j* plays *Sj*, agent *i* can do no better than play *Si*
+        - Strategies *Si* and *Sj* are the best response to each other
+        - Neither agent has any incentive to deviate from a Nash equilibrium  
+    <img width="250" height="250" src="https://i.imgur.com/xFEvrX5.png">
+
+    - Pareto efficiency:
+        - There is no other outcome that improves one player’s utility without making someone worse off  
+    <img width="250" height="250" src="https://i.imgur.com/6A2N0li.png">
+    
 
 
 
@@ -197,7 +223,7 @@ The compiler creates the code for each type used. Avoids code duplication in the
 - Exception handling  
 Once an exception is thrown, the program looks for the next closest `catch` statement that can handle the exception. Once found, stack unwinding begins, destroying in reverse order all stack allocated objects constructed from the beggining of the `try` block associated with the current `catch` handler.
 
-- Inheritance Access
+- Inheritance Access  
     ![InheritanceAccess](https://media.geeksforgeeks.org/wp-content/cdn-uploads/table-class.png)
 
 - Operator overload
@@ -210,6 +236,14 @@ Box operator+(const Box& b) {
     return box;
 }
 ```
+
+- Lambdas  
+Anonymous functions.  
+Syntax: `[ captures ] ( params ) -> ret { body }`  
+    - `captures` can be `&` (pass all variables by reference), `=` (pass variables all by copy), a list of variables or `this`.  
+    - `params` is a parameter list  
+    - `ret` is the return type  
+
 
 - Keywords
     - Volatile  
@@ -231,9 +265,8 @@ Box operator+(const Box& b) {
         Has file scope (can only be accessed in the file where it is created).
     - Friend  
     Can be applied to functions or classes. Enables the function or class to access private members of the other class.
-    - Auto
-    - Extern
-    - Register
+    - Auto: specifies that the type of the variable that is being declared will be automatically deduced from its initializer
+    - Extern: Declares the *existence* of a variable without defining it. If used in a header, a source which includes it can use the variable. The variable still needs to be defined somewhere.
 
 - Struct Packing / Padding
     - Padding is used to increase access performance
