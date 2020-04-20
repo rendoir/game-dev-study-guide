@@ -161,6 +161,25 @@ Games can be cooperative/non-cooperative, symmetric/asymmetric, zero-sum/win-win
     <img width="250" height="250" src="https://i.imgur.com/6A2N0li.png">
     
 
+- Behaviour Trees  
+Data structure where you set the rules of how certain behaviours can occur and order in which they can execute. Normally a acyclic directed graph.  
+    - Nodes:  
+        - Root node
+        - Composite nodes
+            - Selector: decides which child to execute based on some logic
+            - Sequence: execute its child nodes in sequence 
+        - Leaf nodes: AI behaviours/tasks/actions
+    - Expensive to traverse on each tick
+        - Cache a reference to the active node and that node will process the tick, when that node decides to end the tree is re-evaluated
+    - Blackboards: stores data regarding the current state of the world and the AI (e.g., player position, nearest vehicle, nearest cover); can be shared through behaviour trees (memory efficient)
+    - Finite State Machines
+        - Good for simple logic
+        - Less scalable -> having to think of all transitions from a state
+        - Harder to debug
+        - Less designer friendly
+        - Less reusable
+        - Can be core intensive
+        - Good alternative -> Hierarchical Finite State Machines
 
 
 ### Parallel Computing
@@ -210,7 +229,7 @@ A process possesses the resources (files, memory) and a sequence of execution (t
     Hiding of data implementation by restricting access to members variables, with each object keeping its state private.
     - Abstraction  
     Each object should only expose a high-level mechanism for using it. This mechanism should hide internal implementation details. It should only reveal operations relevant for the other objects.
-    - Inheritance
+    - Inheritance  
     Describe a new (derived) class based on an existing (base) class expressing "is-a" and/or "has-a" relationships.
     - Polymorphism  
     Static polymorphism is achieved using method overloading and dynamic polymorphism using method overriding.
