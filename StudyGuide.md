@@ -374,6 +374,16 @@ Atomic operations don't require a thread to block -> No deadlocks. Atomic may be
         - Compile the pch with `g++ pch.h`
         - The file `pch.h.gch` is created
 
+- Evaluation order
+    - Undefined behaviour for argument list  
+    ```cpp
+    int x = function( a(), b(), c() );
+    ```
+    It's undefined behaviour to assume any order of evaluation of `a()`, `b()` and `c()` as any permutation is valid.
+    - Logic operators
+        - operator `&&` evaluates left operand first and if the value is logically `false` then it avoids evaluating the right operand.
+        - operator `||` evaluates left operand first and if the value is logically `true` then it avoids evaluating the right operand. 
+
 - Memory  
 ![Memory](https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png)  
 Stack size if fixed. Program crashes on stack overflow. Entries in the stack are added and removed automatically when entering or exiting their scope. With a full heap, allocators simply return null.  
