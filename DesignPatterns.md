@@ -38,7 +38,15 @@ Vector3 copy = original.clone();
 Ensure a **class has only one instance**, and provide a **global point of access** to it.  
 The single instance is a **private static attribute**. The accessor function is a public static method. The constructor is private. Lazy instantiation is desirable (initialize in the first access).
 ```cpp
-Game game = Game.getInstance();
+class Singleton {
+public:
+    static Singleton& getInstance() {
+        static Singleton instance;
+        return instance;
+    } 
+};
+
+Singleton instance = Singleton.getInstance();
 ```
 
 ## Structural

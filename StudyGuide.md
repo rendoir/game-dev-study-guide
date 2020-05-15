@@ -274,8 +274,8 @@ Syntax: `[ captures ] ( params ) -> ret { body }`
     - Explicit  
     Prefixing the explicit keyword to the constructor prevents the compiler from using that constructor for implicit conversions.
     - Static  
-        - Static variable in functions  
-        Static variables when used inside function are initialized only once, and then they hold their value through function calls.
+        - Static variable in local scope  
+        Static variables when used in a local scope (e.g., inside a function) are initialized only once, and then they hold their value throughout execution (e.g., function calls). They have program lifetime.
         - Static member variable in class  
         Only one instance per class that is shared by all the objects. Initialized outside of class.
         - Static member function in class  
