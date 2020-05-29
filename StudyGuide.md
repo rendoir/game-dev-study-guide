@@ -319,6 +319,40 @@ Syntax: `[ captures ] ( params ) -> ret { body }`
         - `std::string fullName = firstName + lastName`: The sum is an rvalue while `fullName` is a lvalue
         - To accept only rvalues use two ampersands (&&)
 
+    - Avoid unnecessary copies (especially when copying requires heap memory allocation)
+    ```cpp
+    String(const char* string) {
+        m_Size = strlen(string);
+        m_Data = new char[m_Size];
+        memcpy(m_Data, string, m_Size);
+    }
+
+    // Used for temporary values
+    String(String&& other) {
+        // Move
+        m_Size = other.m_Size;
+        m_Data = other.m_Data;
+
+        // Handle temporary string
+        other.m_Size = 0;
+        other.m_Data = nullptr;
+    }
+
+    ~String() {
+        delete m_Data; // In temporary strings, it will delete nullptr
+    }
+
+    // Needs to support temporary values, else it will call the copy constructor
+    Entity(String&& name) :
+        m_Name(std::move(name)) {
+            // std::move is needed to explicitly cast name to String&&
+    }
+
+    int main() {
+        Entity entity = Entity(String("Hello")); // The argument is a temporary value
+    }
+    ```
+
 - Binding
     - Static binding: In assembly, it's just calling the instruction at a fixed address
     - Dynamic binding: The compiler will generate a variable to hold the address of the instruction that will be called
