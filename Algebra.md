@@ -1,43 +1,47 @@
 ### Cross product
-- a * b = |a| * |b| * sin(theta)
-- Anticommutativity: a * b = -b * a 
-- Distributivity: a * (b + c) = a * b + a * c
+- Formula:  
+<img src="https://latex.codecogs.com/svg.latex?\vec{a}&space;\times&space;\vec{b}&space;=&space;|\vec{a}|&space;\cdot&space;|\vec{b}|&space;\cdot&space;sin(\theta)"/>
+- Anticommutativity:  
+<img src="https://latex.codecogs.com/svg.latex?\vec{a}&space;\times&space;\vec{b}&space;=&space;-\vec{b}&space;\times&space;\vec{a}"/>
+- Distributivity:  
+<img src="https://latex.codecogs.com/svg.latex?\vec{a}&space;\times&space;(\vec{b}&space;&plus;&space;\vec{c})&space;=&space;\vec{a}&space;\times&space;\vec{b}&space;&plus;&space;\vec{a}&space;\times&space;\vec{c}"/>
 - Scalar Multiplication Property
 - Is 0 when theta is 0º or 180º, positive for ]0,180[ and negative for ]180,360[
 
 ### Dot product
-- a . b = |a| * |b| * cos(theta)
+- Formula:  
+<img src="https://latex.codecogs.com/svg.latex?\vec{a}&space;\cdot&space;\vec{b}&space;=&space;|\vec{a}|&space;\cdot&space;|\vec{b}|&space;\cdot&space;cos(\theta)"/>
 - Commutative, Distributive, Scalar Multiplication Property
 - Is 0 when perpendicular
 
 ### Planes
 - Vectorial formula:  
-X = P + s * a + t * b  
+<img src="https://latex.codecogs.com/svg.latex?\vec{X}&space;=&space;\vec{P}&space;&plus;&space;s&space;\cdot&space;\vec{a}&space;&plus;&space;t&space;\cdot&space;\vec{b}"/>
 - Cartesian formula:  
-n.x * x + n.y * y + n.z * z = k
+<img src="https://latex.codecogs.com/svg.latex?\vec{n_x}&space;\cdot&space;x&space;&plus;&space;\vec{n_y}&space;\cdot&space;y&space;&plus;&space;\vec{n_z}&space;\cdot&space;z&space;=&space;k"/>
 
 ### Line
 - Vectorial formula:  
-X = P + t * a
+<img src="https://latex.codecogs.com/svg.latex?\vec{X}&space;=&space;\vec{P}&space;&plus;&space;t&space;\cdot&space;\vec{a}"/>
 - Cartesian formula:  
-y = m * x + b
+<img src="https://latex.codecogs.com/svg.latex?y&space;=&space;m&space;\cdot&space;x&space;&plus;&space;b"/>
 
 ### Matrices
-- A^(-1) * A = A * A^(-1) = I
-- Inverse obtained through Gauss-Jordan: Start with A on the left side and I on the right. Linearly combine the rows to achieve I on the left and A^(-1) on the right.
-- Orthogonal if A^(-1) = A^T
+- <img src="https://latex.codecogs.com/svg.latex?A^{-1}&space;\times&space;A&space;=&space;A&space;\times&space;A^{-1}&space;=&space;I"/>
+- Inverse obtained through Gauss-Jordan: Start with A on the left side and I on the right. Linearly combine the rows to achieve I on the left and <img src="https://latex.codecogs.com/svg.latex?A^{-1}"/> on the right.
+- Orthogonal if <img src="https://latex.codecogs.com/svg.latex?A^{-1}&space;=&space;A^T"/>
 
 ### Change of basis
 - Nomenclature
     - Basis: N-dimensional basis are defined by at least N linearly independent vectors
     - Orthogonal Basis: all basis vectors are perpendicular (dot product is zero)
     - Orthonormal Basis: orthogonal basis where all basis vectors have unit length
-- Change of basis matrix M_u->e
-- Xe = M_u->e * Xu
-- E * Xe = U * Xu
-- M_u->e = E^(-1) * U
-- M_u->e = (M_e->u)^(-1)
+- Change of basis matrix <img src="https://latex.codecogs.com/svg.latex?M_{u&space;\rightarrow&space;e}"/>
+- <img src="https://latex.codecogs.com/svg.latex?X_e&space;=&space;M_{u&space;\rightarrow&space;e}&space;\times&space;X_u"/>
+- <img src="https://latex.codecogs.com/svg.latex?E&space;\times&space;X_e&space;=&space;U&space;\times&space;X_u"/>
+- <img src="https://latex.codecogs.com/svg.latex?M_{u&space;\rightarrow&space;e}&space;=&space;E^{-1}&space;\times&space;U"/>
+- <img src="https://latex.codecogs.com/svg.latex?M_{u&space;\rightarrow&space;e}&space;=&space;M_{e&space;\rightarrow&space;u}^{-1}"/>
 - If E and U are orthonormal basis, then E and U are orthogonal matrices:
-    - M_u->e = E^T * U
-    - M_e->u = (M_u->e)^T
+    - <img src="https://latex.codecogs.com/svg.latex?M_{u&space;\rightarrow&space;e}&space;=&space;E^{T}&space;\times&space;U"/>
+    - <img src="https://latex.codecogs.com/svg.latex?M_{u&space;\rightarrow&space;e}&space;=&space;M_{e&space;\rightarrow&space;u}^{T}"/>
 - Basis to matrix: One column is a vector of the basis

@@ -319,6 +319,8 @@ Syntax: `[ captures ] ( params ) -> ret { body }`
         - `std::string fullName = firstName + lastName`: The sum is an rvalue while `fullName` is a lvalue
         - To accept only rvalues use two ampersands (&&)
 
+    - `std::forward()` perfectly forwards with the same data type and value category 
+
     - Avoid unnecessary copies (especially when copying requires heap memory allocation)
     ```cpp
     String(const char* string) {
@@ -328,7 +330,7 @@ Syntax: `[ captures ] ( params ) -> ret { body }`
     }
 
     // Used for temporary values
-    String(String&& other) {
+    String(String&& other) noexcept { // noexcept needed so the object is not left in unknown state
         // Move
         m_Size = other.m_Size;
         m_Data = other.m_Data;
@@ -439,6 +441,13 @@ Cache memory is usually implemented with SRAM (static random-access memory) whil
 
 - Coordinate systems  
 ![Coordinate systems](https://learnopengl.com/img/getting-started/coordinate_systems.png)
+
+- Entity Component System (ECS)  
+    - Having a solution with an array of entities where each has an array of components is not a perfect solution. It causes memory indirection and segmentation and thus more cache misses while also hindering multithreading.
+    - Conceptually, all the engine needs are transforms, meshes, scripts, audio sources, physics bodies, etc. The data-oriented solution is to have an array of components per type of component.
+    - This allows the engine to go through the arrays of component types, instead of going through the entities and its components.
+    - This provides easier multithreading and better cache usage.
+    - The entity still exists to associate components between themselves, so querying other components is still possible, but it could just be an ID.
 
     
 ### Common questions
