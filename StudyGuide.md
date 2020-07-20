@@ -108,7 +108,7 @@
         - Recursion requires more stack memory
         - Recursion can be easier to implement and to use without additional data structures
 
-### Artifitial Inteligence
+### Artificial Intelligence
 - Graphs
     - Weak methods
         - Uniform Cost  
@@ -240,7 +240,7 @@ A process possesses the resources (files, memory) and a sequence of execution (t
 The compiler creates the code for each type used. Avoids code duplication in the codebase.
 
 - Exception handling  
-Once an exception is thrown, the program looks for the next closest `catch` statement that can handle the exception. Once found, stack unwinding begins, destroying in reverse order all stack allocated objects constructed from the beggining of the `try` block associated with the current `catch` handler.
+Once an exception is thrown, the program looks for the next closest `catch` statement that can handle the exception. Once found, stack unwinding begins, destroying in reverse order all stack allocated objects constructed from the beginning of the `try` block associated with the current `catch` handler.
 
 - Inheritance Access  
     ![InheritanceAccess](https://media.geeksforgeeks.org/wp-content/cdn-uploads/table-class.png)
@@ -424,6 +424,9 @@ Atomic operations don't require a thread to block -> No deadlocks. Atomic may be
 ![Memory](https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png)  
 Stack size if fixed. Program crashes on stack overflow. Entries in the stack are added and removed automatically when entering or exiting their scope. With a full heap, allocators simply return null.  
 Cache memory is usually implemented with SRAM (static random-access memory) while the main memory (Stack and Heap) uses DRAM (dynamic random-access memory)
+    - Stack vs Heap  
+    Both stored in RAM memory. The difference is in how the memory is allocated. Allocating memory in the stack simply increments the *stack pointer* with the respective number of bytes, making it extremely fast. Same logic for deallocating - the pointer is decremented (automatic at the end of its scope). Each process maintains a *free list* that keeps track of which blocks of heap memory are free/taken. To allocate memory on the heap, the request goes through the free list trying to find a free block of memory that can hold the number of required bytes, returning the address and recording information (the fact that it's occupied and by how many bytes). Therefore, memory management on the heap is considerably slower due to the increased overhead.  
+    Allocation on the stack should be preferred, except when: (1) the lifetime of the object must be extended; (2) the amount of memory is too large for the stack. As stated, the most impactful aspect between stack and heap is the memory management (allocation and deallocation). However, the stack can also possibly provide better cache usage than the heap, but that is usually negligible. 
 
 
 ### Game Development
