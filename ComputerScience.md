@@ -1,16 +1,7 @@
+# Computer Science
+
 ### Algorithms and Data structures
 - [Big-O Cheat Sheet](https://www.bigocheatsheet.com/)
-
-- Sorting
-    - [Counting Sort](https://www.youtube.com/watch?v=7zuGmKfUt7s)  
-    Count each object, accumulate counts, place in that position while decrementing.
-    - [Radix Sort](https://www.youtube.com/watch?v=nu4gDuFabIM) (only numbers)
-    - [Bubble Sort](https://www.youtube.com/watch?v=nmhjrI-aW5o)  
-    Swap J with J+1 if the former is bigger. Repeat for all entries with each pass reducing the limit of J to N-I-1, where I goes from 0 to N-1. Bigger values bubble to the end.
-    - [Quick Sort](https://www.youtube.com/watch?v=PgBzjlCcFvc)  
-    Choose a pivot (last element). Loop J and if the value is smaller than the pivot, I++ and swap A[I] with A[J] until the pivot. Swap A[I+1] with the pivot. At this point, the pivot is placed in its final position, everything on the left is smaller and everything on the right is bigger. Repeat the process for each sub-array.
-    - [Merge sort](https://www.youtube.com/watch?v=JSceec-wEyw)  
-    Split into sub-arrays until each has 2 elements. Merge each with the next on the tree (if smaller write into position and move on, else stay in the same spot). Repeat for each level of the tree.
 
 - Data structures
     - Vector
@@ -92,6 +83,17 @@
         - Minimum spanning trees (e.g., Prism): subset of the edges of a graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight
         - Shortest path (e.g., Dijkstra): finding a path between two vertices in a graph such that the sum of the weights of its constituent edges is minimized
         - Euler circuit: path in a graph that visits every edge exactly once (allowing for revisiting vertices); when impossible, find the smallest number of graph edges to duplicate (or the subset of edges with the minimum possible total weight) so that the resulting multigraph has an Eulerian circuit
+
+    - Sorting
+        - [Counting Sort](https://www.youtube.com/watch?v=7zuGmKfUt7s)  
+        Count each object, accumulate counts, place in that position while decrementing.
+        - [Radix Sort](https://www.youtube.com/watch?v=nu4gDuFabIM) (only numbers)
+        - [Bubble Sort](https://www.youtube.com/watch?v=nmhjrI-aW5o)  
+        Swap J with J+1 if the former is bigger. Repeat for all entries with each pass reducing the limit of J to N-I-1, where I goes from 0 to N-1. Bigger values bubble to the end.
+        - [Quick Sort](https://www.youtube.com/watch?v=PgBzjlCcFvc)  
+        Choose a pivot (last element). Loop J and if the value is smaller than the pivot, I++ and swap A[I] with A[J] until the pivot. Swap A[I+1] with the pivot. At this point, the pivot is placed in its final position, everything on the left is smaller and everything on the right is bigger. Repeat the process for each sub-array.
+        - [Merge sort](https://www.youtube.com/watch?v=JSceec-wEyw)  
+        Split into sub-arrays until each has 2 elements. Merge each with the next on the tree (if smaller write into position and move on, else stay in the same spot). Repeat for each level of the tree.
 
     - Strings
         - Exact / approximated matching
