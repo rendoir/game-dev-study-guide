@@ -1,5 +1,6 @@
 # Math
 
+## Algebra
 ### Cross product
 - Formula: <img src="https://latex.codecogs.com/svg.latex?\vec{a}&space;\times&space;\vec{b}&space;=&space;|\vec{a}|&space;\cdot&space;|\vec{b}|&space;\cdot&space;sin(\theta)"/>
 - Anticommutativity: <img src="https://latex.codecogs.com/svg.latex?\vec{a}&space;\times&space;\vec{b}&space;=&space;-\vec{b}&space;\times&space;\vec{a}"/>
@@ -16,7 +17,7 @@
 - Vectorial formula: <img src="https://latex.codecogs.com/svg.latex?\vec{X}&space;=&space;\vec{P}&space;&plus;&space;s&space;\cdot&space;\vec{a}&space;&plus;&space;t&space;\cdot&space;\vec{b}"/>
 - Cartesian formula: <img src="https://latex.codecogs.com/svg.latex?\vec{n_x}&space;\cdot&space;x&space;&plus;&space;\vec{n_y}&space;\cdot&space;y&space;&plus;&space;\vec{n_z}&space;\cdot&space;z&space;=&space;k"/>
 
-### Line
+### Lines
 - Vectorial formula: <img src="https://latex.codecogs.com/svg.latex?\vec{X}&space;=&space;\vec{P}&space;&plus;&space;t&space;\cdot&space;\vec{a}"/>
 - Cartesian formula: <img src="https://latex.codecogs.com/svg.latex?y&space;=&space;m&space;\cdot&space;x&space;&plus;&space;b"/>
 
@@ -66,8 +67,8 @@
         - If one t is positive and one t is negative, the ray is shooting from the inside.
         - If both t are negative, the ray is shooting away from the sphere, and technically ray-sphere intersection is actually impossible.
 
-### Physics
-- Uniformly accelerated movements
-     - <img src="https://latex.codecogs.com/svg.latex?v(t)&space;=&space;v_i&space;&plus;&space;a&space;\cdot&space;(t-t_i)"/>
-     - <img src="https://latex.codecogs.com/svg.latex?x(t)&space;=&space;x_i&space;&plus;&space;v_i&space;\cdot&space;(t-t_i)&space;&plus;&space;\frac{a}{2}&space;\cdot&space;(t-t_i)^2"/>
-     - <img src="https://latex.codecogs.com/svg.latex?v(x)^2&space;=&space;v_i^2&space;&plus;&space;2a&space;\cdot&space;(x-x_i)"/>
+## Physics
+### Uniformly accelerated movements
+- <img src="https://latex.codecogs.com/svg.latex?v(t)&space;=&space;v_i&space;&plus;&space;a&space;\cdot&space;(t-t_i)"/>
+- <img src="https://latex.codecogs.com/svg.latex?x(t)&space;=&space;x_i&space;&plus;&space;v_i&space;\cdot&space;(t-t_i)&space;&plus;&space;\frac{a}{2}&space;\cdot&space;(t-t_i)^2"/>
+- <img src="https://latex.codecogs.com/svg.latex?v(x)^2&space;=&space;v_i^2&space;&plus;&space;2a&space;\cdot&space;(x-x_i)"/>
