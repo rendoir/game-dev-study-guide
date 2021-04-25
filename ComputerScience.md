@@ -1,30 +1,35 @@
 # Computer Science
 
 ### Algorithms and Data structures
-- [Big-O Cheat Sheet](https://www.bigocheatsheet.com/)
-
 - Data structures
     - Vector
         - Allocates more memory (capacity) when the size surpasses the capacity. Normally allocates double the previous capacity. If the memory has to be allocated in another location, the vector data has to be copied (actually calls the copy constructor!) to the new location.
         - Because it continuously allocates memory on insertions, the performance on insertions can degrade.
         - Memory is contiguous -> More cache usage -> Storing objects instead of pointers can be better for cache usage
-        - Optimization: Use `std::vector::reserve` to avoid allocations on insertion.
-        - Optimization: Avoid calling copy constructor on insertion with `std::vector::push_back` which happens because the element is in the stack and needs to be copied to the memory allocated by the vector. An optimization is to use `std::vector::emplace_back` instead as it creates the element in the memory allocated by the vector, avoiding a copy. 
+        - Optimization: Use `vector::reserve` to avoid allocations on insertion.
+        - Optimization: Avoid calling copy constructor on insertion with `vector::push_back` which happens because the element is in the stack and needs to be copied to the memory allocated by the vector. An optimization is to use `vector::emplace_back` instead as it creates the element in the memory allocated by the vector, avoiding a copy. 
+        - Optimization: Instead of using `erase`, use `swap` and `pop_back` (erase with last swap) whenever possible.
         - Complexity of `insert`/`erase` (particular index): O(M), where M is the number of elements moved (i.e., distance between `pos` and `end` of the container)
         - Complexity of `push_back`/`pop_back`: O(1)
         - Complexity of access: O(1)
         - Complexity of search: O(N)
-    - List (case of Doubly linked list)
+    - List (case of doubly linked list)
+        - Uses more memory than vectors
+        - Less cache friendly since the memory is not necessarily contiguous
+        - Easy to insert anywhere since all it does is change what the pointers point to
+        - Random access is slower than a vector since it has to go through the pointers to access the desired index
         - Complexity of `insert`/`erase`: O(1)
         - Complexity of `push_back`/`push_front`/`pop_back`/`pop_front`: O(1)
         - Complexity of access: O(N)
         - Complexity of search: O(N)
     - Set
+        - Sorted container of unique objects
         - Complexity of `insert`: O(logN), can be O(1) if the position is right after/before the hint
         - Complexity of `erase`: O(1), position must be given
         - Complexity of search: O(logN)
         - Implemented as a [binary search tree](https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/), usually a Red-Black Tree  
     - Map
+        - Sorted container of key-value pairs
         - Complexity of `insert`: O(logN), can be O(1) if the position is right after/before the hint
         - Complexity of `erase`: O(1), position must be given
         - Complexity of search: O(logN)
@@ -41,7 +46,7 @@
         - Double-ended queue
         - Memory is not contiguous
         - Implemented as multiple arrays of equal and fixed size linked together
-        - On average insertions are faster than vector because it doesn't perform full container copies when more space has to be allocated, at most it creates another array to store the new element
+        - On average, insertions are faster than vector because it doesn't perform full container copies when more space has to be allocated. At most, it creates another array to store the new element
         - Complexity of `insert`/`erase`: O(M), where M is the number of elements moved (i.e., minimum distance between `pos` and either `end` or `begin` of the container)
         - Complexity of `push_back`/`push_front`/`pop_back`/`pop_front`: O(1)
         - Complexity of access: O(1), slower than vector because it performs two-pointer dereference (one for getting the correct array and another for getting the element) instead of one as in vector
@@ -49,6 +54,7 @@
     - Graphs
         - Strongly connected: if every vertex is reachable from every other vertex
         - Biconnection: if any one vertex were to be removed, the graph will remain connected
+    - [Big-O Cheat Sheet](https://www.bigocheatsheet.com/)
 
 - Algorithms
     - Graph algorithms
@@ -85,21 +91,21 @@
         - Euler circuit: path in a graph that visits every edge exactly once (allowing for revisiting vertices); when impossible, find the smallest number of graph edges to duplicate (or the subset of edges with the minimum possible total weight) so that the resulting multigraph has an Eulerian circuit
 
     - Sorting
-        - [Counting Sort](https://www.youtube.com/watch?v=7zuGmKfUt7s)  
-        Count each object, accumulate counts, place in that position while decrementing.
-        - [Radix Sort](https://www.youtube.com/watch?v=nu4gDuFabIM) (only numbers)
         - [Bubble Sort](https://www.youtube.com/watch?v=nmhjrI-aW5o)  
         Swap J with J+1 if the former is bigger. Repeat for all entries with each pass reducing the limit of J to N-I-1, where I goes from 0 to N-1. Bigger values bubble to the end.
         - [Quick Sort](https://www.youtube.com/watch?v=PgBzjlCcFvc)  
         Choose a pivot (last element). Loop J and if the value is smaller than the pivot, I++ and swap A[I] with A[J] until the pivot. Swap A[I+1] with the pivot. At this point, the pivot is placed in its final position, everything on the left is smaller and everything on the right is bigger. Repeat the process for each sub-array.
         - [Merge sort](https://www.youtube.com/watch?v=JSceec-wEyw)  
         Split into sub-arrays until each has 2 elements. Merge each with the next on the tree (if smaller write into position and move on, else stay in the same spot). Repeat for each level of the tree.
+        - [Counting Sort](https://www.youtube.com/watch?v=7zuGmKfUt7s)  
+        Count each object, accumulate counts, place in that position while decrementing.
+        - [Radix Sort](https://www.youtube.com/watch?v=nu4gDuFabIM) (only numbers)
 
     - Strings
         - Exact / approximated matching
         - Compression
     
-    - Programming methods
+    - Problem-solving methods
         - Dynamic programming  
         Avoid repeating sub-problems (e.g., backpack problem, fibonacci)
         - Greedy algorithms
@@ -164,16 +170,28 @@ Games can be cooperative/non-cooperative, symmetric/asymmetric, zero-sum/win-win
     
 
 - Behaviour Trees  
-Data structure where you set the rules of how certain behaviours can occur and order in which they can execute. Normally a acyclic directed graph.  
+Data structure where you set the rules of how certain behaviours can occur and order in which they can execute. Normally an acyclic directed graph.  
     - Nodes:  
         - Root node
-        - Composite nodes
+        - Composite nodes: control how the tree is processed
             - Selector: decides which child to execute based on some logic
-            - Sequence: execute its child nodes in sequence 
+                - Selects the first node that succeeds
+                - Succeeds if one of its child nodes succeeds
+                - Fails if all its child nodes fail
+            - Sequence: execute its child nodes in sequence  
+                - Fails (aborts) when a node fails
+                - Succeeds if all its nodes succeed
         - Leaf nodes: AI behaviours/tasks/actions
+        - Decorator nodes: conditional node
+            - Can be notified of changes and abort nodes
+        - Services: code that runs periodically
+            - If any node below it is active, the service should update periodically
+            - The interval between updates should have a deviation to avoid stacking a lot of updates on the same frame and causing performance issues. Instead, using deviation allows for a better distribution of updates across time.
+    - Success and failure propagates up towards the root
     - Expensive to traverse on each tick
-        - Cache a reference to the active node and that node will process the tick, when that node decides to end the tree is re-evaluated
-    - Blackboards: stores data regarding the current state of the world and the AI (e.g., player position, nearest vehicle, nearest cover); can be shared through behaviour trees (memory efficient)
+        - Cache a reference to the active node and that node will process the tick, when that node decides to end, the tree is re-evaluated
+        - Events can trigger a re-evaluation of the node/tree
+    - Blackboards: stores data regarding the current state of the world and the AI (e.g., player position, nearest vehicle, nearest cover); can be shared across multiple behaviour trees (memory efficient)
     - Finite State Machines
         - Good for simple logic
         - Less scalable -> having to think of all transitions from a state
@@ -211,7 +229,7 @@ A process possesses the resources (files, memory) and a sequence of execution (t
     Responses include to ignore, handle (install signal handler), default (terminate/suspend/continue).  
         - Set response with `sigaction()`
         - Send signal with `kill()` (any process) or `raise()` (to the calling process)
-- Shared memory (OMP) vs Distributed memory (MPI)
+- Shared memory vs Distributed memory
 
 
 ### Object-Oriented Programming
@@ -239,10 +257,10 @@ A process possesses the resources (files, memory) and a sequence of execution (t
 
 ### C/C++
 - Templates  
-The compiler creates the code for each type used. Avoids code duplication in the codebase.
+A form of static polymorphism. The compiler creates the code for each type used. Avoids code duplication in the codebase.
 
 - Exception handling  
-Once an exception is thrown, the program looks for the next closest `catch` statement that can handle the exception. Once found, stack unwinding begins, destroying in reverse order all stack allocated objects constructed from the beginning of the `try` block associated with the current `catch` handler.
+Once an exception is thrown, the program looks for the next closest `catch` statement that can handle the exception. Once found, stack unwinding begins, destroying in reverse order all stack-allocated objects constructed from the beginning of the `try` block associated with the current `catch` handler.
 
 - Inheritance Access  
     ![InheritanceAccess](https://media.geeksforgeeks.org/wp-content/cdn-uploads/table-class.png)
@@ -285,15 +303,14 @@ Syntax: `[ captures ] ( params ) -> ret { body }`
         - Static global variable  
         Has file scope (can only be accessed in the file where it is created).
     - Friend  
-    Can be applied to functions or classes. Enables the function or class to access private members of the other class.
+    Can be applied to classes or member functions. Enables the function or class to access private members of the other class.
     - Auto: specifies that the type of the variable that is being declared will be automatically deduced from its initializer
     - Extern: Declares the *existence* of a variable without defining it. If used in a header, a source which includes it can use the variable. The variable still needs to be defined somewhere.
 
 - Struct Packing / Padding
-    - Padding is used to increase access performance
-    - Disable padding with `#pragma pack(1)` which packs on the first byte.
     - Each CPU Cycle can access only one word (4 bytes in 32-bit architectures). So if an `int` (4 bytes) is distributed in 2 words due to bad alignment before the int, then it will take 2 CPU cycles to read its value.
-    - Solution is to add padding
+    - Padding is used as a solution to increase access performance
+    - Disable padding with `#pragma pack(1)` which packs on the first byte.
 
 - Smart pointer
     - Automate the process of deleting the allocated memory. 
@@ -309,7 +326,7 @@ Syntax: `[ captures ] ( params ) -> ret { body }`
         - When the reference counter reaches 0, the pointer is deleted
     - Weak pointer
         - Used with shared pointers
-        - Assigning a weak pointer to a shared pointer does not increase/decrease the reference counter
+        - Assigning a shared pointer to a weak pointer does not increase/decrease the reference counter
         - Possible to query if the pointer is valid, because they might point to invalid memory if the shared pointer has been deleted
 
 - Move semantics        
@@ -399,13 +416,13 @@ Atomic operations don't require a thread to block -> No deadlocks. Atomic may be
     It is a compile-time directive which instructs the compiler to treat the expression as if it had the new type. In other words, that piece of memory is now treated as the new type.
 
     - Dynamic casts  
-    Used for conversions between polymorphic types in real-time, i.e., to cast from a class to a derived class (the other way around can be done implicitly). Dynamic casts can be seen as a validation to the cast, using Runtime Type Information (RTTI) to know if the type matches. Dynamic casts can use the `typeid` operator which returns a `type_info` struct.  
+    Used for conversions between polymorphic types in run-time, i.e., to cast from a class to a derived class (the other way around can be done implicitly). Dynamic casts can be seen as a validation to the cast, using Runtime Type Information (RTTI) to know if the type matches. Dynamic casts can use the `typeid` operator which returns a `type_info` struct.  
 
     - Const cast  
     Removes the constness from a variable  
 
 - Pre-compiled headers
-    - Place all necessary headers that won't be changed constantly (for example std or frameworks) in a header (`pch.h`).
+    - Place all necessary headers that won't be changed constantly (for example std or libraries) in a header (`pch.h`).
     - Speeds up (subsequent) compilation times
     - g++ usage:
         - Create the `pch.h`
@@ -424,11 +441,11 @@ Atomic operations don't require a thread to block -> No deadlocks. Atomic may be
 
 - Memory  
 ![Memory](https://study.com/cimages/multimages/16/1724cf83-a8ad-4ad5-aeca-0311114a819c_memory_alloc_cpp.png)  
-Stack size if fixed. Program crashes on stack overflow. Entries in the stack are added and removed automatically when entering or exiting their scope. With a full heap, allocators simply return null.  
+Stack size if fixed. Process crashes on stack overflow. Entries in the stack are added and removed automatically when entering or exiting their scope. With a full heap, allocators simply return null.  
 Cache memory is usually implemented with SRAM (static random-access memory) while the main memory (Stack and Heap) uses DRAM (dynamic random-access memory)
     - Stack vs Heap  
     Both stored in RAM memory. The difference is in how the memory is allocated. Allocating memory in the stack simply increments the *stack pointer* with the respective number of bytes, making it extremely fast. Same logic for deallocating - the pointer is decremented (automatic at the end of its scope). Each process maintains a *free list* that keeps track of which blocks of heap memory are free/taken. To allocate memory on the heap, the request goes through the free list trying to find a free block of memory that can hold the number of required bytes, returning the address and recording information (the fact that it's occupied and by how many bytes). Therefore, memory management on the heap is considerably slower due to the increased overhead.  
-    Allocation on the stack should be preferred, except when: (1) the lifetime of the object must be extended; (2) the amount of memory is too large for the stack. As stated, the most impactful aspect between stack and heap is the memory management (allocation and deallocation). However, the stack can also possibly provide better cache usage than the heap, but that is usually negligible. 
+    Allocation on the stack should be preferred, except when: (1) the lifetime of the object must be extended; (2) the amount of memory is too large for the stack. As stated, the most impactful aspect between stack and heap is the memory management (allocation and deallocation). However, the stack can also possibly provide slightly better cache usage than the heap, but that is usually negligible. 
 
 
 ### Game Development
